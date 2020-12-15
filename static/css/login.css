@@ -1,0 +1,15 @@
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#header-log-in span{
+    font-size: 32px;
+}
+#container {
+    display: flex;
+    justify-content: center;
+}
+#container form{
+    margin-top: 10vw;
+    padding: 100px;
+    border: 3px solid #ccc;
+}

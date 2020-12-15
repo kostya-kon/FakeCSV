@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Edit{% endblock title %}
+
+{% block links %}
+<link href="{% static 'css/edit.css' %}" rel="stylesheet">
+{% endblock links %}
+
+{% block content %}
+<form method="POST" action="/create/" id="RowForm">
+    {% csrf_token %}
+<table class="table table-borderless">
+    <thead>
+      <tr>
+        <th scope="col" id="col-data-sets"><h2>Data sets</h2></th>
+        <th scope="col" id="col-row">id = {{ id }}</th>
+        <th scope="col" id="col-row"><label for="id_Type">Row:</label>{{ form.row }}</th>
+        <th scope="col"><input type="submit" class="btn btn-primary" value="Generate Data" form="RowForm"></th>
+      </tr>
+    </thead>
+</table>
+</table>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td scope="col">#</td>
+            <td scope="col">Created</td>
+            <td scope="col">Status</td>
+            <td scope="col">Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for csv in csvs %}
+        <tr>
+            <td scope="row">{{ csv.pk }}</td>
+            <td scope="row">{{ csv.create_date|date }}</td>
+            {% if csv.is_ready == 1%}
+            <td scope="row"><span class="badge badge-success">Ready</span></td>
+            {% else %}
+            <td scope="row"><span class="badge badge-danger">Not ready</span></td>
+            {% endif %}
+            {% if csv.is_ready == 1%}
+            <td scope="row"><a href="{% url 'download' csv.filename %}">Download</a></td>
+            {% else %}
+            <td scope="row"></td>
+            {% endif %}
+            
+        </tr>
+        
+    {% empty %}
+        <li>No articles yet.</li>
+    {% endfor %}
+    </tbody>
+</table>
+</form>
+{% endblock content %}

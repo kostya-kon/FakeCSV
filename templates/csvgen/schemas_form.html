@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}New{% endblock title %}
+{% block links %}
+<link href="{% static 'css/new.css' %}" rel="stylesheet">
+{% endblock links %}
+{% block content %}
+<table class="table table-borderless">
+    <thead>
+      <tr>
+        <th scope="col"><h2>Data schemas</h2></th>
+        <th scope="col" id="button-table"><input type="submit" class="btn btn-primary" value="Submit" form="SchemaForm"></th>
+      </tr>
+    </thead>
+</table>
+
+<form method="POST" action="/add/" id="SchemaForm">
+    {% csrf_token %}
+    <div class="form-group form-groupcss">
+      <label for="id_Name">Name</label>
+      {{ form2.Name }}
+    </div>
+    <div class="form-group form-groupcss">
+      <label for="id_Column_separator">Column separator</label>
+      {{ form2.Column_separator }}
+    </div>
+    <div class="form-group form-groupcss">
+        <label for="id_String_character">String character</label>
+        {{ form2.String_character }}
+    </div>
+    <table class="table table-borderless">
+    <thead>
+        <tr>
+            <th scope="col">Column name</th>
+            <th scope="col">Type</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Sentences</th>
+            <th scope="col">Order</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for element in list %}
+        <tr>
+            <th scope="col">{{ element.Column_name }}</th>
+            <th scope="col">{{ element.Type }}</th>
+            {% if element.Type.value == "integer" %}
+            <th scope="col">{{ element.From }}</th>
+            {% else %}
+            <th scope="col"></th>
+            {% endif %}
+            {% if element.Type.value == "integer" %}
+            <th scope="col">{{ element.To }}</th>
+            {% else %}
+            <th scope="col"></th>
+            {% endif %}
+            {% if element.Type.value == "text" %}
+            <th scope="col">{{ element.Sentences }}</th>
+            {% else %}
+            <th scope="col"></th>
+            {% endif %}
+            <th scope="col">{{ element.Order }}</th>
+        </tr>
+    {% endfor %}
+    </form>
+    </tbody>
+    </table>
+
+  <form class="addform" method="POST" action="/new/">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="id_Column_name">Column name</label>
+          {{ form.Column_name }}
+        </div>
+        <div class="form-group col-md-2">
+          <label for="id_Type">Type</label>
+          {{ form.Type }}
+        </div>
+        <div class="form-group col-md-1 type-input-int">
+            <label for="id_From">From</label>
+            {{ form.From }}
+            <label for="id_To">To</label>
+            {{ form.To }}
+        </div>
+        <div class="form-group col-md-1 type-input-txt">
+            <label for="id_From">Count of sentences</label>
+            {{ form.Sentences }}
+          </div>
+        <div class="form-group col-md-2">
+          <label for="id_Order">Order</label>
+          {{ form.Order }}
+        </div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="ADD">
+  </form>
+{% endblock content %}
+{% block script %}
+<script>
+
+  document.querySelector('#inputState').addEventListener('input', (e) => {
+        if (e.target.value === 'integer'){
+            document.querySelectorAll('.type-input-int').forEach(input => {
+            input.style.display = 'block'
+        })
+        }
+        else if (e.target.value === 'text'){
+            document.querySelectorAll('.type-input-txt').forEach(input => {
+            input.style.display = 'block'
+        })
+        }
+    })
+</script>
+{% endblock script %}

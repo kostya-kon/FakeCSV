@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block links %}
+<link href="{% static 'css/list.css' %}" rel="stylesheet">
+{% endblock links %}
+
+
+{% block content %}
+<table class="table table-borderless">
+    <thead>
+      <tr>
+        <th scope="col"><h2>Data schemas</h2></th>
+        <th scope="col" id="button-table"><button type="button" class="btn btn-success" ><a href="{% url 'new' %}" style="color: white;">New Schema</a></button></th>
+      </tr>
+    </thead>
+</table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td scope="col">#</td>
+                <td scope="col">Title</td>
+                <td scope="col">Modified</td>
+                <td scope="col">Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+    {% for schema in object_list %}
+        <tr>
+            <td scope="row">{{ schema.pk }}</td>
+            <td><a href="{% url 'edit' schema.pk %}">{{ schema.title }}</a></td>
+            <td>{{ schema.Post_date|date }}</td>
+            <td><a href="{% url 'edit' schema.pk %}">Edit</a><a href="{% url 'delete_schema' schema.pk%}" style="color: red;">Delete</a></td>
+        </tr>
+        
+    {% empty %}
+        <li>No articles yet.</li>
+    {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

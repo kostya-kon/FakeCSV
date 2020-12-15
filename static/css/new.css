@@ -1,0 +1,22 @@
+
+.form-group, .btn{
+    margin: 10px;
+}
+.form-groupcss input{
+    width: 40%;
+}
+.form-groupcss select{
+    width: 40%;
+}
+.addform{
+    border: 2px solid #ccc;
+    margin: 5px;
+}
+
+.type-input-int {
+    display: none;
+}
+
+.type-input-txt {
+    display: none;
+ }
